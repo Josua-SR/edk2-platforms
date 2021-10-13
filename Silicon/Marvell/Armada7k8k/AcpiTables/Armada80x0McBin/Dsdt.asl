@@ -326,43 +326,6 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "MVEBU ", "ARMADA8K", 3)
             }
         }
 
-        Device (XSMI)
-        {
-            Name (_HID, "MRVL0101")                             // _HID: Hardware ID
-            Name (_UID, 0x00)                                   // _UID: Unique ID
-            Method (_STA)                                       // _STA: Device status
-            {
-                Return (0xF)
-            }
-            Name (_CRS, ResourceTemplate ()
-            {
-                Memory32Fixed (ReadWrite,
-                    0xf212a600,                                 // Address Base
-                    0x00000010,                                 // Address Length
-                    )
-            })
-            Device (PHY0)
-            {
-                Name (_ADR, 0x0)
-                Name (_DSD, Package () {
-                    ToUUID("daffd814-6eba-4d8c-8a91-bc9bbf4aa301"),
-                    Package () {
-                        Package () { "compatible", "ethernet-phy-ieee802.3-c45" },
-                    }
-                })
-            }
-            Device (PHY8)
-            {
-                Name (_ADR, 0x8)
-                Name (_DSD, Package () {
-                    ToUUID("daffd814-6eba-4d8c-8a91-bc9bbf4aa301"),
-                    Package () {
-                        Package () { "compatible", "ethernet-phy-ieee802.3-c45" },
-                    }
-                })
-            }
-        }
-
         Device (PP20)
         {
             Name (_HID, "MRVL0110")                             // _HID: Hardware ID
@@ -400,7 +363,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "MVEBU ", "ARMADA8K", 3)
                     Package () { "port-id", 0 },
                     Package () { "gop-port-id", 0 },
                     Package () { "phy-mode", "10gbase-kr"},
-                    Package () { "phy-handle", \_SB.XSMI.PHY0},
+                    Package () { "managed", "in-band-status"},
                   }
               })
             }
@@ -443,7 +406,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "MVEBU ", "ARMADA8K", 3)
                     Package () { "port-id", 0 },
                     Package () { "gop-port-id", 0 },
                     Package () { "phy-mode", "10gbase-kr"},
-                    Package () { "phy-handle", \_SB.XSMI.PHY8},
+                    Package () { "managed", "in-band-status"},
                   }
               })
             }
